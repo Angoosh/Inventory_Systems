@@ -10,13 +10,21 @@ def Open(file):
         #line_count = 0
         for row in csv_reader:
             line.append(row)
-            print(line)
-            print("Header:")
-            print(line[0][0]+" "+line[0][1]+" "+line[0][2])
-            print("\n")
     
     return line
     
+def List(file):
+    line = []
+    with open(file+".csv") as file:
+        csv_reader = csv.reader(file, delimiter=',')
+        #line_count = 0
+        for row in csv_reader:
+            line.append(row)
+
+        print("\n")
+        for i in range(len(line)):
+            print(line[i])
+
 def Edit():
     for i in range(len(line)):
         if i == 0:
@@ -64,13 +72,24 @@ if __name__ == "__main__":
     """
     Default(FILE)
     """
-    a = input("Edit [E] or Append [A]? ")
-    if a == "E" or a == "e":
-        line = Open(FILE)
-        Edit()
-        Write(FILE)
-    elif a == "A" or a == "a":
-        Append(FILE)
-    else:
-        print("Invalid option!\n")
+    while True:
+        a = input("Edit [E], Append [A], List[L] or Exit [Exit]? ")
+        if a == "E" or a == "e":
+            line = Open(FILE)
+            Edit()
+            Write(FILE)
+        elif a == "A" or a == "a":
+            while True:
+                Append(FILE)
+                a = input("Next item? [Y/n] ")
+                if a == "Y" or a == "y":
+                    pass
+                else:
+                    break
+        elif a == "L" or a == "l":
+            line = List(FILE)
+        elif a == "Exit" or a == "exit":
+            break
+        else:
+            print("Invalid option!\n")
     
